@@ -34,6 +34,16 @@ if (input === '-v' || input === '--version') {
 }
 
 /*!
+ * Read from stdin
+ */
+if (input === '-') {
+    process.stdin.resume();
+    var response = fs.readSync(process.stdin.fd, 2048, null, "utf8");
+    process.stdin.pause();
+    input = response[0];
+}
+
+/*!
  * Render the QR Code
  */
 
@@ -51,6 +61,7 @@ function help() {
         'Options:',
         '  -h, --help           output usage information',
         '  -v, --version        output version number',
+        '  -                    read from stdin',
         '',
         'Examples:',
         '',
